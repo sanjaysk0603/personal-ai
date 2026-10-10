@@ -1,6 +1,4 @@
 // server/index.js
-// Entry point: starts the Express server.
-
 require('dotenv').config();
 const path = require('node:path');
 const express = require('express');
@@ -10,7 +8,15 @@ const { init } = require('../memory/db');
 const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
-app.use('/chat', chatRouter);
+
+function requireSecret(req, res, next) {
+  const secret = process.env.API_SECRET;
+  if (!secret || req.headers['x-api-secret'] !== secret) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  next();
+}
+app.use('/chat', requireSecret, chatRouter);
 
 const PORT = process.env.PORT || 3000;
 
