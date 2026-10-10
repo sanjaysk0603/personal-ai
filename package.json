@@ -1,0 +1,18 @@
+{
+  "name": "personal-ai",
+  "version": "0.1.0",
+  "description": "Personal AI assistant with persistent memory",
+  "main": "server/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "test:gemini": "node test-gemini.js",
+    "test:db": "node memory/test-db.js",
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.14.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0"
+  }
+}
